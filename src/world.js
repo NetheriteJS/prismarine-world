@@ -25,36 +25,6 @@ class World extends EventEmitter {
     if (storageProvider && savingInterval !== 0) this.startSaving()
   }
 
-  initialize (iniFunc, length, width, height = 256, iniPos = new Vec3(0, 0, 0)) {
-    function inZone (x, y, z) {
-      if (x >= width || x < 0) { return false }
-      if (z >= length || z < 0) {
-        return false
-      }
-      if (y >= height || y < 0) { return false }
-      return true
-    }
-    const ps = []
-    const iniPosInChunk = posInChunk(iniPos)
-    const chunkLength = Math.ceil((length + iniPosInChunk.z) / 16)
-    const chunkWidth = Math.ceil((width + iniPosInChunk.x) / 16)
-    for (let chunkZ = 0; chunkZ < chunkLength; chunkZ++) {
-      const actualChunkZ = chunkZ + Math.floor(iniPos.z / 16)
-      for (let chunkX = 0; chunkX < chunkWidth; chunkX++) {
-        const actualChunkX = chunkX + Math.floor(iniPos.x / 16)
-        ps.push(this.getColumn(actualChunkX, actualChunkZ)
-          .then(chunk => {
-            const offsetX = chunkX * 16 - iniPosInChunk.x
-            const offsetZ = chunkZ * 16 - iniPosInChunk.z
-            chunk.initialize((x, y, z) => inZone(x + offsetX, y - iniPos.y, z + offsetZ) ? iniFunc(x + offsetX, y - iniPos.y, z + offsetZ) : null)
-            return this.setColumn(actualChunkX, actualChunkZ, chunk)
-          })
-          .then(() => ({ chunkX: actualChunkX, chunkZ: actualChunkZ })))
-      }
-    }
-    return Promise.all(ps)
-  }
-
   async raycast (from, direction, range, matcher = null) {
     const iter = new RaycastIterator(from, direction, range)
     let pos = iter.next()
@@ -65,7 +35,7 @@ class World extends EventEmitter {
         const intersect = iter.intersect(block.shapes, position)
         if (intersect) {
           block.face = intersect.face
-          block.intersect = intersect.pos
+          block.intersect = intersect.pos+1
           return block
         }
       }
