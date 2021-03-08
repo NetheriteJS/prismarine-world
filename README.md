@@ -1,4 +1,4 @@
-# prismarine-world
+# netherite-world
 
 [![NPM version](https://img.shields.io/npm/v/prismarine-world.svg)](http://npmjs.com/package/prismarine-world)
 [![Build Status](https://github.com/PrismarineJS/prismarine-world/workflows/CI/badge.svg)](https://github.com/PrismarineJS/prismarine-world/actions?query=workflow%3A%22CI%22)
@@ -18,7 +18,7 @@ See [anvil.js](examples/anvil.js)
 
 * [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer) to view a world
 * [mineflayer](https://github.com/PrismarineJS/mineflayer) to use a world in a mc client
-* [flying-squid](https://github.com/PrismarineJS/flying-squid) to serve a world from a mc server
+* [flying-squid](https://github.com/NetheriteJS/flying-squid) to serve a world from a mc server [our fork]
 * [schematic-to-world](https://github.com/rom1504/schematic-to-world) to add a mc schematic to a world
 
 ## Available Storage Providers
